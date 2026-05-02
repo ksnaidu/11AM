@@ -31,8 +31,32 @@
        url: https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
        dest: /tmp/catalogue.zip
 
+  #came error: module and expect the file to exist on the remote, see the remote_src option"
+  # remote_src: yes means files already exist in catalogue server
+
   - name: Extract catalogue code
     ansible.builtin.unarchive:
         src: /tmp/catalogue.zip
         dest: /app
         remote_src: yes
+
+  - name: install dependencies
+    community.general.npm:
+       path: /app
+
+  - name: copy catalogue service to system directory
+    ansible.builtin.copy:
+      src: catalogue.service
+      dest: /etc/systemd/system/catalogue.service
+
+  - name: Systemctl daemon reload
+    ansible.builtin.systemd_service:
+        daemon_reload: true
+
+  - name: start and enable catalogue
+    ansible.builtin.service:
+        name: catalogue
+        state: started
+        enabled: yes
+
+  
