@@ -59,4 +59,26 @@
         state: started
         enabled: yes
 
-  
+  - name: copy mongodb repo
+    ansible.builtin.copy:
+        src: mongo.repo
+        dest: /etc/yum.repos.d/mongo.repo
+
+  - name: install mongodb client
+    ansible.builtin.dnf:
+        name: mongodb-mongosh
+        state: present
+
+  - name: check products loaded or not
+    ansible.builtin.command: mongosh --host mongodb.kimidi.site --eval 'db.getMongo().getDBnames().indexof("catalogue")
+    register: catalogue_output
+
+  - name: print catalogue catalogue catalogue_output
+    ansible.builtin.debug:
+        msg:  "{{ catalogue_output }}"
+
+  - name: load products
+    ansible.builtin.shell: mongosh --host mongodb.kimidi.site </app/db/master-data.js
+    when: catalogue_output.stdout | int < 0
+
+    
