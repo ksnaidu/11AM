@@ -80,4 +80,5 @@
   - name: load products
     ansible.builtin.shell: mongosh --host mongodb.kimidi.site </app/db/master-data.js
     when: catalogue_output.stdout | int < 0
+  
 
