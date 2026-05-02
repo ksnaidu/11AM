@@ -31,3 +31,7 @@
        url: https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
        dest: /tmp/catalogue.zip
 
+  - name: Extract catalogue code
+    ansible.builtin.unarchive:
+        src: /tmp/cataloge.zip
+        dest: /app
