@@ -21,15 +21,18 @@
 - name: check products loaded or not
   ansible.builtin.command: mongosh --host mongodb.kimidi.site --eval 'db.getMongo().getDBNames().indexOf("catalogue")'
   register: catalogue_output
+  ignore_erros: true
   
 - name: print catalogue output
   ansible.builtin.debug:
     msg: "{{ catalogue_output }}"
+  ignore_erros: true
  
 
 - name: load products
   ansible.builtin.shell: mongosh --host mongodb.kimidi.site < /app/db/master-data.js
   when: catalogue_output.stdout | int < 0
+  ignore_erros: true
   
 
 - name: systemd setup
@@ -43,5 +46,5 @@
   include_role:
     name: common
     tasks_from: Deployment
-    
+
 
