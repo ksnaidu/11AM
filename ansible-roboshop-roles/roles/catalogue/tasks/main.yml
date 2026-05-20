@@ -37,3 +37,11 @@
     name: common
     tasks_from: systemd.yaml
 
+- name: Deployment
+  tags:
+  - Deployment
+  include_role:
+    name: common
+    tasks_from: Deployment
+    
+
