@@ -3,7 +3,7 @@
   connection: local
   vars:
     instances:
-    - mysqllllll
+    - mysql
     - backend
     - frontend
     subnet_id: subnet-03e6cceb18e4b8d7f
