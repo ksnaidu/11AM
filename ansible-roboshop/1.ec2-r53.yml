@@ -1,0 +1,27 @@
+- name: create ec2 and r53 records
+  hosts: local
+  connection: local
+  vars:
+    instances:
+    - mysql
+    - backend
+    - frontend
+    subnet_id: subnet-03e6cceb18e4b8d7f
+    sg_id: sg-074fcb38eeb53bcbe
+    zone: kimidi.site
+  tasks:
+  - name: create ec2
+    amazon.aws.ec2_instance:
+      name: "{{ item }}"
+      vpc_subnet_id: "{{ subnet_id }}"
+      instance_type: t3.micro
+      security_group: "{{ sg_id }}"
+      image_id: ami-0220d79f3f480ecf5
+      tags:
+        Name: "{{ item }}"
+    loop: "{{ instances }}"
+    register: ec2_output
+
+  - name: print ec2_output
+    ansible.builtin.debug:
+      msg: "{{ ec2_output }}"
