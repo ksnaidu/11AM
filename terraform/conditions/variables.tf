@@ -43,3 +43,7 @@ variable "sg_tags" {
      }  
 }
 
+variable "environment" {
+    default = "prod"
+  
+}
