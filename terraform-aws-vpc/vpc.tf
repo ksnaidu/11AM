@@ -14,3 +14,41 @@ resource "aws_vpc" "main" {
     }
   )
 }
+
+#IGW roboshop-dev
+
+resource "aws_internet_gateway" "main" {
+  vpc_id = aws_vpc.main.id ## Association with VPC
+
+  tags = merge (
+    local.common_tags,
+    {
+      Name = "${var.project}-${var.environment}"
+    }
+  )
+  
+}
+
+
+resource "aws_subnet" "public" {
+  count = length(var.public_subnet_cidrs)
+  vpc_id = aws_vpc.main.id
+  cidr_block = var.public_subnet_cidrs[count.index] # exicute 2 subnets
+
+  availability_zone = local.az_names[count.index]   ## 0 menas inclusive, 2 means exclusies
+  map_public_ip_on_launch = true  ## subnet instances must use public-ip required.
+
+  tags = merge(
+    local.common_tags,
+    {
+      Name = "${var.project}-${var.environment}-public-${local.az_names[count.index]}"
+    }
+  )
+  }
+  
+
+
+
+
+
+

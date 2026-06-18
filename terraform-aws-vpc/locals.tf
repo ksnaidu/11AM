@@ -1,11 +1,12 @@
 
 ### project name, env these details easily identification purpose we create
 
-locals {       
+locals {
   common_tags = {
-    project = var.project
+    Project = var.project
     Environment = var.environment
-    terraform = "true"
-
+    Terraform = "true"
   }
+
+  az_names = slice(data.aws_availability_zones.available.names, 0, 2)
 }
