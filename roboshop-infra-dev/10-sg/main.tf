@@ -8,3 +8,4 @@
     vpc_id = local.vpc_id  ##vpc-id stored in ssm parameter after create.
 }
   
+
