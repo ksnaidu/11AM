@@ -1,19 +1,9 @@
-#roboshop-dev-frontend (Create security group module)
+#roboshop-dev-frontend
 resource "aws_security_group" "main" {
-  name        = "${var.project}-${var.environment}-${var.sg_name}"
-  description = var.sg_description  ## mandatory for check the security group details
+  name        =  "${var.project}-${var.environment}-${var.sg_name}"
+  description = var.sg_description
   vpc_id      = var.vpc_id
 
-  tags = merge(
-    var.sg_tags,
-    local.common_tags,
-    {
-        Name = "${var.project}-${var.environment}-${var.sg_name}"
-    }
-
-  )
-   
-  }
   egress {
     from_port        = 0
     to_port          = 0
@@ -22,3 +12,11 @@ resource "aws_security_group" "main" {
     ipv6_cidr_blocks = ["::/0"]
   }
 
+  tags = merge(
+    var.sg_tags,
+    local.common_tags,
+    {
+        Name = "${var.project}-${var.environment}-${var.sg_name}"
+    }
+  )
+}
