@@ -5,6 +5,6 @@
 
 
 output "vpc_id" {
-    value = module.vpc.vpc_IDid
+    value = module.vpc.vpc_id
 	}
 	
