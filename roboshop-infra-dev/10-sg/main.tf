@@ -50,3 +50,13 @@ resource "aws_security_group_rule" "backend_alb_bastion" {
   security_group_id = module.backend_alb.sg_id
 }
 
+
+module "vpn" {
+  source = "git::https://github.com/ksnaidu/11AM.git//terraform-aws-securitygroup?ref=main"
+  project = var.project
+  environment = var.environment
+
+  sg_name = "vpn"
+  sg_description = "for vpn"
+  vpc_id = local.vpc_id ##vpc-id stored in ssm parameter after create.
+}
