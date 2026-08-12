@@ -1,1 +1,1 @@
-FROM almalinux:9   # Base image
+FROM almalinux:9
