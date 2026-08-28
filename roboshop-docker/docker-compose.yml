@@ -52,4 +52,20 @@ services:
       RABBITMQ_DEFAULT_USER: roboshop
       RABBITMQ_DEFAULT_PASS: roboshop123
 
+  payment:
+    image: satyamnaidu/payment:v1
+    container_name: payment
+    ENVIRONMENT:
+      CART_HOST: cart
+      CART_PORT: 8080
+      USER_HOST: user
+      USER_PORT: 8080
+      AMQP_POST: rabbitmq
+      AMQP_USER: roboshop
+      AMQP_PASS: roboshop123
+    depends_on:
+    - rabbitmq
+    - cart
+    - user
+    
       
